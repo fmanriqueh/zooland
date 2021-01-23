@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "715631113347",
+    "project_id": "zooland-ab3b3",
+    "storage_bucket": "zooland-ab3b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715631113347:android:5cbeb276da3bce28ce57b6",
+        "android_client_info": {
+          "package_name": "com.example.zooland"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715631113347-68tifr7j8uamflc6p9epg0e3iljh9l5v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zooland",
+            "certificate_hash": "43f4feca19bc293b67a931956970ce73d8c04708"
+          }
+        },
+        {
+          "client_id": "715631113347-d31o66b2bcnjilf8kkoc2g760fnejg3t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0FDNkKSOHzFNQ1JK-1IX_4oKjSrvsrAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715631113347-d31o66b2bcnjilf8kkoc2g760fnejg3t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "715631113347-pm7nfb2mtkt9eka6tnmtjjnv0n3mdk4n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.zooland"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
