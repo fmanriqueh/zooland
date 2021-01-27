@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zooland/src/resources/auth.dart';
-import 'package:zooland/src/widgets/rounded_button.dart';
+
+import 'package:zooland/src/pages/news/news_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -14,6 +14,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   int _currentBottomTap = 0;
+  PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +35,14 @@ class _HomePageState extends State<HomePage> {
         title: Text(widget.title),
         actions: <Widget>[],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Yeison Manrique H"),
-            RoundedButton(
-              onPressed: () async {
-                await Auth.instance.signOut();
-                Navigator.popAndPushNamed(context, '/');
-              }, child: Text('Sign out'))
-          ]
+      body: SafeArea(
+        child: WillPopScope(
+          child: PageView(
+            children: [
+              NewsPage()
+            ],
+          ),
+          onWillPop: _onWillPop,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -58,5 +68,14 @@ class _HomePageState extends State<HomePage> {
         ]
       ),
     );
+  }
+
+  Future<bool> _onWillPop() async{
+    if(_pageController.page.round() == _pageController.initialPage){
+      return true;
+    }else{
+      _pageController.animateToPage(0, duration: Duration(milliseconds: 1), curve: Curves.fastOutSlowIn);
+      return false;
+    }
   }
 }

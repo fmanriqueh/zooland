@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -10,6 +11,7 @@ class Auth {
   static final Auth instance = Auth._internal();
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   User get user => _firebaseAuth.currentUser;
@@ -21,6 +23,8 @@ class Auth {
         UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
         if(userCredential.user != null){
+          await userCredential.user.updateProfile(displayName: name);
+          _saveUser(userCredential.user, name);
           return userCredential.user;
         }
         return null;
@@ -91,6 +95,18 @@ class Auth {
 
   Future<void> signOut(){
     return _firebaseAuth.signOut();
+  }
+
+  void _saveUser(User user, String name){
+
+    Map<String, dynamic> userData = {
+      "name" : name,
+      "email": user.email,
+      "created_at" : user.metadata.creationTime.millisecondsSinceEpoch
+    };
+
+    final userRef = _database.reference().child("users").child(user.uid);
+    userRef.set(userData);
   }
 
 }
