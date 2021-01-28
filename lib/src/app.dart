@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zooland/src/pages/auth/auth_page.dart';
 import 'package:zooland/src/pages/home_page.dart';
+import 'package:zooland/src/pages/news/add_news_page.dart';
 import 'package:zooland/src/resources/auth.dart';
 
 class App extends StatelessWidget {
@@ -15,15 +16,20 @@ class App extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
-        '/': (context){
-          if(Auth.instance.user != null){
-            return HomePage(title: 'Zooland',);
-          }else{
+        '/': (context) {
+          if (Auth.instance.user != null) {
+            return HomePage(
+              title: 'Zooland',
+            );
+          } else {
             return AuthPage();
           }
         },
-        '/home': (context){
+        '/home': (context) {
           return HomePage(title: 'Logged');
+        },
+        '/add-news': (context) {
+          return AddNewsPage();
         }
       },
     );

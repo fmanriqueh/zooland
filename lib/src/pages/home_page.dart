@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:zooland/src/pages/news/news_page.dart';
 
+import '../providers/api_provider.dart';
+import '../resources/auth.dart';
+import '../widgets/rounded_button.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
 
@@ -12,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   int _currentBottomTap = 0;
   PageController _pageController;
 
@@ -39,42 +42,37 @@ class _HomePageState extends State<HomePage> {
         child: WillPopScope(
           child: PageView(
             children: [
-              NewsPage()
+              NewsPage(),
             ],
           ),
           onWillPop: _onWillPop,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentBottomTap,
-        onTap: (int index){
-          setState(() {
-            _currentBottomTap = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.article),
-            label: "Noticias",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: "Emparejar"
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Perfil"
-          )
-        ]
-      ),
+          currentIndex: _currentBottomTap,
+          onTap: (int index) {
+            setState(() {
+              _currentBottomTap = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.article),
+              label: "Noticias",
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.favorite), label: "Emparejar"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Perfil")
+          ]),
     );
   }
 
-  Future<bool> _onWillPop() async{
-    if(_pageController.page.round() == _pageController.initialPage){
+  Future<bool> _onWillPop() async {
+    if (_pageController.page.round() == _pageController.initialPage) {
       return true;
-    }else{
-      _pageController.animateToPage(0, duration: Duration(milliseconds: 1), curve: Curves.fastOutSlowIn);
+    } else {
+      _pageController.animateToPage(0,
+          duration: Duration(milliseconds: 1), curve: Curves.fastOutSlowIn);
       return false;
     }
   }

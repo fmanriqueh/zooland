@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart';
+
 class NewsList {
   List<NewsModel> newsList;
 
@@ -5,21 +7,26 @@ class NewsList {
 }
 
 class NewsModel {
-
   String headline;
   String summary;
-  String img;
+  String imgUrl;
   String place;
   String uid;
-  DateTime date;
+  String date;
 
-  NewsModel({this.headline, this.summary, this.img, this.place, this.date, this.uid});
+  NewsModel(
+      {this.headline,
+      this.summary,
+      this.imgUrl,
+      this.place,
+      this.date,
+      this.uid});
 
   Map<String, dynamic> toJson() => {
-    'headline': this.headline,
-    'summary': this.summary,
-    'img': this.img,
-    'place': this.place,
-    'date': this.date
-  };
+        'headline': this.headline,
+        'summary': this.summary,
+        'imgUrl': this.imgUrl,
+        'place': this.place,
+        'date': this.date
+      };
 }

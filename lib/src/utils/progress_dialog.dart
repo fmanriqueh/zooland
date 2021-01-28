@@ -2,13 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class ProgressDialog{
-
-  Future<User> showProgressLogin({BuildContext context, Future future}){
-    future.then((value){
-      if(value == null){
+class ProgressDialog {
+  Future<User> showProgressLogin({BuildContext context, Future future}) {
+    future.then((value) {
+      if (value == null) {
         Navigator.pop(context);
-      }else{
+      } else {
         _dismiss(context);
       }
       return value;
@@ -16,29 +15,35 @@ class ProgressDialog{
     _show(context);
   }
 
-  Future<User> showProgress({BuildContext context, Future future}){
-    future.then((value){
+  Future<User> showProgress({BuildContext context, Future future}) {
+    future.then((value) {
       Navigator.pop(context);
       return value;
     });
     _show(context);
   }
 
-  void _show(BuildContext context){
-    showCupertinoModalPopup(
-      context: context,
-      builder: (_) => Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.white.withOpacity(0.7),
-        child: CupertinoActivityIndicator(
-          radius: 15,
-        ),
-      )
-    );
+  Future<void> showProgressAndGoBack({BuildContext context, Future future}) {
+    future.then((value) {
+      _dismiss(context);
+    });
+    _show(context);
   }
 
-  void _dismiss(BuildContext context){
+  void _show(BuildContext context) {
+    showCupertinoModalPopup(
+        context: context,
+        builder: (_) => Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.white.withOpacity(0.7),
+              child: CupertinoActivityIndicator(
+                radius: 15,
+              ),
+            ));
+  }
+
+  void _dismiss(BuildContext context) {
     Navigator.pop(context);
     Navigator.popAndPushNamed(context, '/');
   }
