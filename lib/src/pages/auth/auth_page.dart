@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zooland/src/pages/auth/forgot_page.dart';
 
+import 'package:zooland/src/pages/auth/forgot_page.dart';
 import 'package:zooland/src/pages/auth/login_page.dart';
 import 'package:zooland/src/pages/auth/signup_page.dart';
-
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key key}) : super(key: key);
@@ -13,8 +12,13 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-
   PageController _pageController;
+
+  Map<String, int> _pages = {
+    "loginPage" : 0,
+    "signupPage": 1,
+    "forgotPage": 2
+  };
 
   @override
   void initState() {
@@ -42,14 +46,14 @@ class _AuthPageState extends State<AuthPage> {
               controller: _pageController,
               children: [
                 LoginPage(
-                  onGoToSignup: () => _switchForm(1),
-                  onGoToForgot: () => _switchForm(2),
+                  onGoToSignup: () => _switchPage(_pages['signupPage']),
+                  onGoToForgot: () => _switchPage(_pages['forgotPage']),
                 ),
                 SignupPage(
-                  onGoToLogin: () => _switchForm(0),
+                  onGoToLogin: () => _switchPage(_pages['loginPage']),
                 ),
                 ForgotPage(
-                  onGoToLogin: () => _switchForm(0),
+                  onGoToLogin: () => _switchPage(_pages['loginPage']),
                 )
               ],
             ),
@@ -60,52 +64,16 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
-  void _switchForm(int page){
-    _pageController.animateToPage(page, duration: Duration(milliseconds:1), curve: Curves.fastOutSlowIn);
+  void _switchPage(int page){
+    _pageController.jumpToPage(page);
   }
 
   Future<bool> _onWillPop() async{
     if(_pageController.page.round() == _pageController.initialPage){
       return true;
     }else{
-      _pageController.animateToPage(0, duration: Duration(milliseconds: 1), curve: Curves.fastOutSlowIn);
+      _pageController.jumpToPage(_pages['loginPage']);
       return false;
     }
   }
-
 }
-
-/*
-GestureDetector(
-
-
-Stack(
-          children: [Container(
-padding: EdgeInsets.all(18),
-child: Center(
-  child: WillPopScope(
-    child: PageView(
-      physics: NeverScrollableScrollPhysics(),
-      controller: _pageController,
-      children: [
-        ListView(
-                              children: [LoginPage(
-            onGoToForgot: (){
-              _switchForm(2);
-            },
-            onGoToSignup: (){
-              _switchForm(1);
-            },
-          ),]
-        ),
-        SignupPage(),
-        ForgotPage()
-      ],
-    ),
-    onWillPop: () => _onWillPop(),
-  ),
-),
-),]
-),
-
-*/

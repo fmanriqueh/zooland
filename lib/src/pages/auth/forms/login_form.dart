@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:zooland/src/resources/auth.dart';
 import 'package:zooland/src/widgets/custom_text_form_field.dart';
 import 'package:zooland/src/widgets/rounded_button.dart';
 import 'package:zooland/src/utils/validators.dart';
-import 'package:zooland/src/utils/progress_dialog.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -14,11 +12,11 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
 
+  final Auth _auth = Auth.instance;
+
   final _formKey     = GlobalKey<FormState>();
   final _emailKey    = GlobalKey<CustomTextFormFieldState>();
   final _passwordKey = GlobalKey<CustomTextFormFieldState>();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,27 +35,19 @@ class _LoginFormState extends State<LoginForm> {
             key: _passwordKey,
             hint: "Contraseña",
             isPassword: true,
-            validator: (value){
-              if(value.isEmpty){
-                return 'Debe ingresar una contraseña';
-              }
-              return null;
-            },
+            validator: (value) => value.isEmpty ? 'Debe ingresar una contraseña':null,
           ),
           RoundedButton(
+            child: Text("Ingresar"),
             onPressed: () {
               if(_formKey.currentState.validate()){
-                ProgressDialog().showProgressLogin(
-                  context: context,
-                  future: Auth.instance.loginWithEmailAndPassword(
-                    context,
-                    email: _emailKey.currentState.value,
-                    password: _passwordKey.currentState.value
-                  )
+                _auth.loginWithEmailAndPassword(
+                  context,
+                  email: _emailKey.currentState.value,
+                  password: _passwordKey.currentState.value
                 );
               }
-            },
-            child: Text("Ingresar")
+            }
           ),
         ]
       ),

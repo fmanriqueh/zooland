@@ -30,17 +30,26 @@ class ProgressDialog {
     _show(context);
   }
 
+  Future<void> showProgressNormal({BuildContext context, Future future}) {
+    future.then((value) {
+      Navigator.pop(context);
+      Navigator.pop(context);
+    });
+    _show(context);
+  }
+
   void _show(BuildContext context) {
     showCupertinoModalPopup(
-        context: context,
-        builder: (_) => Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: Colors.white.withOpacity(0.7),
-              child: CupertinoActivityIndicator(
-                radius: 15,
-              ),
-            ));
+      context: context,
+      builder: (_) => Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: Colors.white.withOpacity(0.7),
+        child: CupertinoActivityIndicator(
+          radius: 15,
+        ),
+      )
+    );
   }
 
   void _dismiss(BuildContext context) {

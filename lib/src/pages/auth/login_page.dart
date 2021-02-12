@@ -4,8 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:zooland/src/pages/auth/forms/login_form.dart';
 import 'package:zooland/src/resources/auth.dart';
 import 'package:zooland/src/widgets/circle_button.dart';
-//import 'package:zooland/src/widgets/progress_dialog.dart';
-import 'package:zooland/src/utils/progress_dialog.dart';
+import 'package:zooland/src/widgets/horizontal_divider.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, @required this.onGoToForgot, @required this.onGoToSignup}) : super(key: key);
@@ -56,61 +55,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
-              Row(children: <Widget>[
-                Expanded(
-                  child: new Container(
-                      margin: const EdgeInsets.only(right: 20.0),
-                      child: Divider(
-                        color: Colors.black26,
-                        height: 36,
-                      )),
-                ),
-                Text(
-                  "O",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400
-                  ),
-                ),
-                Expanded(
-                  child: new Container(
-                      margin: const EdgeInsets.only(left: 20.0),
-                      child: Divider(
-                        color: Colors.black26,
-                        height: 36,
-                      )),
-                ),
-              ]),
+              HorizontalDivider(text: 'O',),
               Text("Ingresa con:"),
               SizedBox(height: 10.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleButton(
-                    onPressed: (){
-                      //Auth.instance.loginWithFacebook(context);
-                    },
-                    iconPath: "assets/icons/pages/login/facebook.svg"
-                  ),
-                  CircleButton(
                     onPressed: () {
-
-                      ProgressDialog().showProgressLogin(
-                        future: Auth.instance.loginWithGoogle(context),
-                        context: context
-                      );
-                      
-                      /*ProgressDialog().test(context,
-                        Future.delayed(Duration(seconds: 5),() => "12")                        
-                      );
-                      
-                      ProgressDialog().show(context);
-                      final User user = await Auth.instance.loginWithGoogle(context);
-                      ProgressDialog().dismiss(context);
-                      
-                      if(user != null){
-                        Navigator.popAndPushNamed(context, '/');
-                      }*/
-                      //Scaffold.of(context).showSnackBar(SnackBar(content:Text("Algo salió mal")));
+                      Auth.instance.loginWithGoogle(context);
                     },
                     iconPath: "assets/icons/pages/login/google.svg"
                   )
@@ -133,7 +86,6 @@ class _LoginPageState extends State<LoginPage> {
                   )
                 ],
               ),
-              
             ]
           ),
         ),

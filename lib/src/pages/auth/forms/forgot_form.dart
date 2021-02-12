@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:zooland/src/resources/auth.dart';
 
+import 'package:zooland/src/resources/auth.dart';
 import 'package:zooland/src/widgets/custom_text_form_field.dart';
-import 'package:zooland/src/utils/validators.dart';
 import 'package:zooland/src/widgets/rounded_button.dart';
 import 'package:zooland/src/utils/progress_dialog.dart';
+import 'package:zooland/src/utils/validators.dart';
 
 class ForgotForm extends StatefulWidget {
   @override
@@ -12,6 +12,8 @@ class ForgotForm extends StatefulWidget {
 }
 
 class _ForgotFormState extends State<ForgotForm> {
+
+  final Auth _auth = Auth.instance;
 
   final _formKey = GlobalKey<FormState>();
   final _emailKey = GlobalKey<CustomTextFormFieldState>();
@@ -33,7 +35,7 @@ class _ForgotFormState extends State<ForgotForm> {
               if(_formKey.currentState.validate()){
                 ProgressDialog().showProgress(
                   context: context,
-                  future: Auth.instance.resetPassword(context, email: _emailKey.currentState.value)
+                  future: _auth.resetPassword(context, email: _emailKey.currentState.value)
                 );
               }
             },

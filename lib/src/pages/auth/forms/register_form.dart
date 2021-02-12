@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:zooland/src/resources/auth.dart';
+import 'package:zooland/src/utils/validators.dart';
 import 'package:zooland/src/widgets/custom_text_form_field.dart';
 import 'package:zooland/src/widgets/rounded_button.dart';
-import 'package:zooland/src/utils/validators.dart';
-import 'package:zooland/src/utils/progress_dialog.dart';
 
 
 class RegisterForm extends StatefulWidget {
@@ -13,6 +12,8 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
+
+  final Auth _auth = Auth.instance;
 
   final _formKey     = GlobalKey<FormState>();
   final _nameKey     = GlobalKey<CustomTextFormFieldState>();
@@ -29,12 +30,7 @@ class _RegisterFormState extends State<RegisterForm> {
           CustomTextFormField(
             key: _nameKey,
             hint: "Nombre",
-            validator: (value){
-              if(value.isEmpty){
-                return 'Debe ingresar un nombre';
-              }
-              return null;
-            },
+            validator: (value) => value.isEmpty ? 'Debe ingresar un nombre':null
           ),
           SizedBox(height: 10.0),
           CustomTextFormField(
@@ -47,12 +43,7 @@ class _RegisterFormState extends State<RegisterForm> {
             key: _passwordKey,
             hint: "Contraseña",
             isPassword: true,
-            validator: (value){
-              if(value.isEmpty){
-                return 'Debe ingresar una contraseña';
-              }
-              return null;
-            },
+            validator: (value) => Validators.passwordValidator(value)
           ),
           SizedBox(height: 10.0),
           CustomTextFormField(
@@ -70,14 +61,11 @@ class _RegisterFormState extends State<RegisterForm> {
           RoundedButton(
             onPressed: () async {
               if(_formKey.currentState.validate()){
-                ProgressDialog().showProgressLogin(
-                  context: context,
-                  future: Auth.instance.signupWithEmailAndPassword(
-                    context,
-                    name: _nameKey.currentState.value,
-                    email: _emailKey.currentState.value,
-                    password: _passwordKey.currentState.value
-                  )
+                _auth.signupWithEmailAndPassword(
+                  context,
+                  name: _nameKey.currentState.value, 
+                  email: _emailKey.currentState.value,
+                  password: _passwordKey.currentState.value
                 );
               }
             },

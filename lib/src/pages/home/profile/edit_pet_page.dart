@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:zooland/src/pages/news/forms/add_news_form.dart';
+import 'package:zooland/src/models/pet_model.dart';
+import 'package:zooland/src/pages/home/profile/forms/edit_pet_form.dart';
 
-class AddNewsPage extends StatefulWidget {
-  AddNewsPage({Key key}) : super(key: key);
-
+class EditPetPage extends StatefulWidget {
+  EditPetPage({Key key}) : super(key: key);
+  
   @override
-  _AddNewsPageState createState() => _AddNewsPageState();
+  _EditPetPageState createState() => _EditPetPageState();
 }
 
-class _AddNewsPageState extends State<AddNewsPage> {
+class _EditPetPageState extends State<EditPetPage> {
   @override
   Widget build(BuildContext context) {
+    final PetModel pet = ModalRoute.of(context).settings.arguments;
     return Scaffold(
         appBar: AppBar(
-          title: Text("Agregar evento"),
+          title: Text('Editar mascota'),
         ),
         body: GestureDetector(
           onTap: () {
@@ -28,14 +30,14 @@ class _AddNewsPageState extends State<AddNewsPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Nuevo evento",
+                        "Datos de ${pet.name}",
                         style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 25,
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10.0),
-                      AddNewsForm()
+                      EditPetForm(pet: pet)
                     ],
                   ),
                 ),

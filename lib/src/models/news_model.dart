@@ -1,9 +1,19 @@
+import 'dart:collection';
+import 'dart:convert';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:uuid/uuid.dart';
 
 class NewsList {
-  List<NewsModel> newsList;
+  List<NewsModel> _newsList;
 
-  NewsList({this.newsList});
+  List<NewsModel> fromJSON(news){
+    _newsList = List();
+    news.forEach((uid, data) {
+      _newsList.add(NewsModel().fromJson(uid, data['data']));
+    });
+    return _newsList;
+  }
 }
 
 class NewsModel {
@@ -22,11 +32,21 @@ class NewsModel {
       this.date,
       this.uid});
 
+  NewsModel fromJson(uid, news) {
+    this.headline = news['headline'];
+    this.summary = news['summary'];
+    this.place = news['place'];
+    this.imgUrl = news['imgUrl'];
+    this.date = news['date'];
+    this.uid = uid;
+    return this;
+  }
+
   Map<String, dynamic> toJson() => {
-        'headline': this.headline,
-        'summary': this.summary,
-        'imgUrl': this.imgUrl,
-        'place': this.place,
-        'date': this.date
-      };
+    'headline': this.headline,
+    'summary': this.summary,
+    'imgUrl': this.imgUrl,
+    'place': this.place,
+    'date': this.date
+  };
 }

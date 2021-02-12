@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:zooland/src/app.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:zooland/src/widgets/activity_indicator.dart';
 
 
 void main() async{
@@ -30,23 +31,9 @@ class MyApp extends StatelessWidget {
         if(snapshot.connectionState == ConnectionState.done){
           return App();
         }else if(snapshot.hasError){
-          return Center(child: Text("Something went wrong"),);
+          return Center(child: Text("Algo salió mal..."),);
         }
-        return Center(
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Colors.white,
-            child: CupertinoActivityIndicator(
-              radius: 15
-            )
-          )
-        );
-
-        
-        /*return Center(
-          child: CircularProgressIndicator(),
-        );*/
+        return ActivityIndicator();
       },
     );
   }

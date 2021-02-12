@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatefulWidget {
-  CustomTextFormField({Key key, this.hint, this.isPassword = false, this.validator}) : super(key: key);
+  CustomTextFormField({Key key, this.hint, this.isPassword = false, this.validator, this.text = ''}) : super(key: key);
 
   final String hint;
+  final String text;
   final bool isPassword;
   final Function(String) validator;
 
@@ -17,11 +18,12 @@ class CustomTextFormFieldState extends State<CustomTextFormField> {
   bool _obscuredText = true;
 
   String get value => _controller.text;
+  set text(String str) => _controller.text = str;
 
   @override
   void initState() {    
     super.initState();
-    _controller = TextEditingController(text: '');
+    _controller = TextEditingController(text: widget.text);
   }
 
   @override

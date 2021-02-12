@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DateFormField extends StatefulWidget {
-  DateFormField({Key key, this.hint}) : super(key: key);
+  DateFormField({Key key, this.hint, this.text = ''}) : super(key: key);
 
   final String hint;
+  final String text;
 
   @override
   DateFormFieldState createState() => DateFormFieldState();
@@ -25,14 +26,14 @@ class DateFormFieldState extends State<DateFormField> {
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
-        _controller.text = "${picked.day}-${picked.month}-${picked.year}";
+        _controller.text = "${picked.year}-${picked.month < 10 ? 0:''}${picked.month}-${picked.day < 10 ? 0:''}${picked.day}";
       });
   }
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: '');
+    _controller = TextEditingController(text: widget.text);
   }
 
   @override

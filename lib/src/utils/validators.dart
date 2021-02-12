@@ -8,6 +8,15 @@ class Validators{
     return null;
   }
 
+  static String passwordValidator(String value) {
+    if(value.isEmpty) {
+      return 'Debe ingresar una contraseña';
+    } else if(!RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$").hasMatch(value)) {
+      return 'La contraseña debe tener al menos 8 caracteres,\n una letra y un número';
+    }
+    return null;
+  }
+
   static String generalValidator(String value){
     if(value.isEmpty){
       return "Este campo no puede estar vacio";

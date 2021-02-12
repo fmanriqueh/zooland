@@ -73,6 +73,12 @@ class Auth {
 
     final UserCredential userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
+
+    // check if user exist 
+    if(userCredential.additionalUserInfo.isNewUser) {
+      _saveUser(userCredential.user, userCredential.user.displayName);
+    }
+    
     return userCredential.user;
   }
 
@@ -86,8 +92,16 @@ class Auth {
     return userCredential.user;
   }*/
 
-  Future<bool> checkAdmin(BuildContext context) {
-    print(_database.reference().child('admins').child(this.user.uid));
+  Future<bool> isAdmin() async {
+    bool isAdmin = await _database.reference()
+    .child('admins').
+    orderByKey().
+    equalTo(this.user.uid).once().then(
+      (snapshot) {
+        return (snapshot.value != null);
+      }
+    );
+    return isAdmin;
   }
 
   Future<void> resetPassword(BuildContext context,
